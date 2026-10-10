@@ -1,0 +1,33 @@
+<div class="w-full mx-auto px-4 py-12">
+  <div class="columns-1 md:columns-3 gap-8 space-y-8">
+    <% if (letters && letters.length > 0) { %>
+      <% 
+const randomStyles = [
+  '-rotate-[2deg] translate-y-1.5 -translate-x-1 hover:rotate-0',
+  'rotate-[1.5deg] -translate-y-2 translate-x-1 hover:rotate-0',
+  '-rotate-[1deg] translate-y-3 hover:rotate-0',
+  'rotate-[2.5deg] -translate-y-1 -translate-x-1.5 hover:rotate-0',
+  'rotate-0 translate-y-2 translate-x-1 hover:scale-[1.02]',
+  '-rotate-[2.5deg] -translate-y-3 translate-x-0.5 hover:rotate-0',
+  'rotate-[1deg] translate-y-1 -translate-x-2 hover:rotate-0'
+];
+      %>
+      <% letters.forEach((item, index) => { %>
+        <% const style = randomStyles[index % randomStyles.length]; %>
+        <div class="break-inside-avoid bg-amber-50/80 border border-amber-900/15 rounded-xl p-6 cursor-none <%= style %>">
+          <p class="font-['PlayBall'] text-stone-800 text-xl leading-relaxed whitespace-pre-line mb-6 pt-1">
+            <%= item.content %>
+          </p>
+          <div class="pt-3 border-t border-dashed border-amber-900/15 flex items-center justify-between text-xs font-['PlayBall'] text-stone-500">
+            <span>📮 Đến ngày:</span>
+            <span class="font-mono text-stone-700">
+              <%= new Date(item.send_at).toLocaleDateString('vi-VN') %>
+            </span>
+          </div>
+
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+
+</div>

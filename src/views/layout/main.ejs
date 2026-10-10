@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FutureMe - Nhắn gửi tới tương lai</title>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/favicon_io/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/favicon_io/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/favicon_io/favicon-16x16.png"
+    />
+    <link rel="manifest" href="assets/favicon_io/site.webmanifest" />
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">  </head>
+  <%
+  let bgImage = '/assets/ice_blur.png';
+  if (page === 'landing page') {
+    bgImage = '/assets/forest_blur.jpg';
+  } if (page === 'write') {
+    bgImage = '/assets/heart_blur.png';
+  } if (page ==='public'){
+    bgImage='/assets/violet_blur.png';
+  }
+  let btnContent='📮 Góc công khai';
+  if(page==='public'){
+    btnContent="✍️ Viết thư mới";
+  }
+%>
+  <body style="background-image: url('<%= bgImage %>')"
+  class="min-h-screen w-full bg-cover bg-center bg-no-repeat bg-fixed"  >
+<div class="fixed top-4 right-4 z-40">
+  <a 
+    href="<%=page==='public'?'/':'/public'%>" 
+    class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF7F2]/90 hover:bg-amber-100/90 backdrop-blur-md border border-stone-300/60 text-stone-700 font-['Lora'] text-base"
+  >
+    <span class=""><%=btnContent%></span>
+  </a>
+</div>
+    <main class="z-10 w-full"><%- body %></main>
+    <script src="/client.js"></script>
+  </body>
+</html>
