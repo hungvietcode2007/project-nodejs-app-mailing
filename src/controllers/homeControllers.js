@@ -50,13 +50,15 @@ const createLetterPost = async (req, res) => {
     const values = [];
     values.push([access_token, email, content, send_at, is_public]);
     await createLetter(values);
-    sendMail(
-      email,
-      "Đôi lời từ nhà phát triển",
-      `Cảm ơn bạn đã sử dụng phần mềm của chúng tôi
-Bạn có thể xem tình trạng của bức thư tại link này: localhost:6868/${access_token}
+    setImmediate(() => {
+      sendMail(
+        email,
+        "Đôi lời từ nhà phát triển",
+        `Cảm ơn bạn đã sử dụng phần mềm của chúng tôi
+Bạn có thể xem tình trạng của bức thư tại link này: https://project-nodejs-app-mailing.onrender.com/${access_token}
 Nếu có bất kỳ góp ý nào xin vui lòng liên hệ zalo 0328159778`,
-    );
+      ).catch((err) => console.error("Lỗi gửi mail ngầm:", err));
+    });
     res.redirect(`/${access_token}`);
   } catch (err) {
     console.log(err);
