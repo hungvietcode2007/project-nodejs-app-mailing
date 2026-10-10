@@ -11,6 +11,5 @@ const hostname = process.env.HOST_NAME;
 const connection = require("./config/database");
 const { startCronJob } = require("./services/cronJob");
 app.listen(port, hostname, () => {
-  console.log(`server is running on ${hostname}:${port}`);
   startCronJob();
 });

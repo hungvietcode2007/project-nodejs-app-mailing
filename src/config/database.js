@@ -10,5 +10,6 @@ const connection = mysql2.createPool({
   connectionLimit: 10,
   charset: "utf8mb4",
   timezone: "Z",
+  ssl: { minVersion: "TLSv1.2", rejectUnauthorized: true },
 });
 module.exports = connection;
