@@ -44,7 +44,9 @@
           <button
             class="cursor-pointer text-blue-400 underline"
             onclick="
-              navigator.clipboard.writeText(`localhost:6868/<%=access_token%>`)
+              navigator.clipboard.writeText(
+                `${window.location.origin}/<%= access_token %>`,
+              )
             "
           >
             tại đây
