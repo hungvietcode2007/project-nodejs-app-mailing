@@ -50,15 +50,29 @@ const createLetterPost = async (req, res) => {
     const values = [];
     values.push([access_token, email, content, send_at, is_public]);
     await createLetter(values);
-    setImmediate(() => {
-      sendMail(
-        email,
-        "Đôi lời từ nhà phát triển",
-        `Cảm ơn bạn đã sử dụng phần mềm của chúng tôi
-Bạn có thể xem tình trạng của bức thư tại link này: https://project-nodejs-app-mailing.onrender.com/${access_token}
-Nếu có bất kỳ góp ý nào xin vui lòng liên hệ zalo 0328159778`,
-      ).catch((err) => console.error("Lỗi gửi mail ngầm:", err));
-    });
+    const appUrl =
+      process.env.APP_URL || "https://project-nodejs-app-mailing.onrender.com";
+
+    const htmlContent = `
+  <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
+    <h2 style="color: #2b6cb0;">Xác nhận lưu thư thành công</h2>
+    <p>Xin chào,</p>
+    <p>Hệ thống <strong>Future Letter</strong> đã ghi nhận bức thư gửi đến tương lai của bạn.</p>
+    <p>Bạn có thể theo dõi tiến trình và trạng thái gửi của bức thư bằng cách nhấn vào liên kết bên dưới:</p>
+    <div style="margin: 24px 0;">
+      <a href="${appUrl}/${access_token}" style="background-color: #3182ce; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+        Xem chi tiết bức thư
+      </a>
+    </div>
+    <p style="font-size: 13px; color: #718096;">Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.</p>
+  </div>
+`;
+    await sendMail(
+      email,
+      "Xác nhận: Bức thư gửi tương lai của bạn đã được ghi nhận",
+      htmlContent,
+    );
+
     res.redirect(`/${access_token}`);
   } catch (err) {
     console.log(err);

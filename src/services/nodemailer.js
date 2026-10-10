@@ -18,12 +18,12 @@ const transporter = nodemailer.createTransport({
     rejectUnauthorized: false,
   },
 });
-const sendMail = async (email_receive, subject, text) => {
+const sendMail = async (email_receive, subject, html) => {
   const mailOptions = {
     from: `"Hộp Thư Thời Gian" <${process.env.EMAIL_USER}>`,
     to: email_receive,
     subject: subject,
-    text: text,
+    html: html,
   };
   return await transporter.sendMail(mailOptions);
 };
