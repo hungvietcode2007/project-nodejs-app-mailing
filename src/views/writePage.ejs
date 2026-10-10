@@ -116,11 +116,11 @@
           <button
             type="button"
             id="choose-date-btn"
-            class="relative w-full flex items-center justify-center gap-2 py-2.5 px-4 text-base font-serif text-amber-950/80 bg-white hover:bg-amber-100 border border-stone-200 rounded-full cursor-pointer"
+            class="relative w-full flex items-center justify-center gap-2 py-2.5 px-4 text-base font-serif text-amber-950/80 <%=(typeof error!=='undefined'&&oldData.specific_date)?"bg-amber-200 font-semibold":"bg-white"%> hover:bg-amber-100 border border-stone-200 rounded-full cursor-pointer"
             onclick=""
           >
             <span id="date-label-text" class="font-['Lora']">
-              Chọn một ngày cụ thể
+              <%=(typeof error!=='undefined'&&oldData.specific_date)?oldData.specific_date:"Chọn một ngày cụ thể"%>
             </span>
             <svg
               class="w-6 h-6 text-[#6E5D4F]"
@@ -142,7 +142,7 @@
                 id="specific_date"
                 name="specific_date"
                 class="text-lg relative w-full h-full opacity-0"
-                value="<%=(typeof err!=='undefined'&&oldData.specific_date)?oldData.specific_date:""%>"
+                value="<%=(typeof error!=='undefined'&&oldData.specific_date)?oldData.specific_date:""%>"
                 onchange="
                   if (this.value) {
                     document

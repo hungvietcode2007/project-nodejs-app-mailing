@@ -278,6 +278,9 @@
   .left-1\/2 {
     left: calc(1 / 2 * 100%);
   }
+  .left-\[50\%\] {
+    left: 50%;
+  }
   .z-10 {
     z-index: 10;
   }
@@ -771,6 +774,12 @@
   .bg-amber-200 {
     background-color: var(--color-amber-200);
   }
+  .bg-amber-400 {
+    background-color: var(--color-amber-400);
+  }
+  .bg-amber-500 {
+    background-color: var(--color-amber-500);
+  }
   .bg-stone-300 {
     background-color: var(--color-stone-300);
   }
@@ -833,8 +842,14 @@
   .bg-center {
     background-position: center;
   }
+  .bg-top {
+    background-position: top;
+  }
   .bg-no-repeat {
     background-repeat: no-repeat;
+  }
+  .bg-repeat {
+    background-repeat: repeat;
   }
   .p-2 {
     padding: calc(var(--spacing) * 2);
