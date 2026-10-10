@@ -112,12 +112,12 @@
             </label>
           </div>
         </div>
-        <div>
+        <label class="relative mt-3">
           <button
             type="button"
             id="choose-date-btn"
-            class="mt-3 relative w-full flex items-center justify-center gap-2 py-2.5 px-4 text-base font-serif text-amber-950/80 bg-white hover:bg-amber-100 border border-stone-200 rounded-full cursor-pointer"
-            onclick="document.querySelector('#specific_date').showPicker()"
+            class="relative w-full flex items-center justify-center gap-2 py-2.5 px-4 text-base font-serif text-amber-950/80 bg-white hover:bg-amber-100 border border-stone-200 rounded-full cursor-pointer"
+            onclick=""
           >
             <span id="date-label-text" class="font-['Lora']">
               Chọn một ngày cụ thể
@@ -136,30 +136,32 @@
               />
             </svg>
           </button>
-          <input
-            type="date"
-            id="specific_date"
-            name="specific_date"
-            class="sr-only text-lg"
-            value="<%=(typeof err!=='undefined'&&oldData.specific_date)?oldData.specific_date:""%>"
-            onchange="
-              if (this.value) {
-                document
-                  .getElementById('date-label-text')
-                  .classList.add('font-semibold');
-
-                document.getElementById('date-label-text').innerText =
-                  this.value;
-                document
-                  .getElementById('choose-date-btn')
-                  .classList.remove('bg-white');
-                document
-                  .getElementById('choose-date-btn')
-                  .classList.add('bg-amber-100');
-              }
-            "
-          />
-        </div>
+          <div class="absolute top-0 left-0 right-0 bottom-0">
+              <input
+                type="date"
+                id="specific_date"
+                name="specific_date"
+                class="text-lg relative w-full h-full opacity-0"
+                value="<%=(typeof err!=='undefined'&&oldData.specific_date)?oldData.specific_date:""%>"
+                onchange="
+                  if (this.value) {
+                    document
+                      .getElementById('date-label-text')
+                      .classList.add('font-semibold');
+    
+                    document.getElementById('date-label-text').innerText =
+                      this.value;
+                    document
+                      .getElementById('choose-date-btn')
+                      .classList.remove('bg-white');
+                    document
+                      .getElementById('choose-date-btn')
+                      .classList.add('bg-amber-100');
+                  }
+                "
+              />
+          </div>
+        </label>
         <span class="text-stone-500">(Thư sẽ được gửi vào 8:00 sáng)</span>
         <label class="cursor-pointer my-10">
           <div class="flex items-center">
