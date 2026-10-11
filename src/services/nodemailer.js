@@ -1,27 +1,58 @@
 require("dotenv").config();
+const { google } = require("googleapis");
 
-const nodemailer = require("nodemailer");
-const email_send = process.env.EMAIL_USER;
-const email_send_pass = process.env.EMAIL_PASSWORD;
-console.log("User check:", process.env.EMAIL_USER);
-console.log("Kiểm tra Client ID:", process.env.CLIENT_ID);
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    type: "OAuth2",
-    user: process.env.EMAIL_USER,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    refreshToken: process.env.REFRESH_TOKEN,
-  },
+const oAuth2Client = new google.auth.OAuth2(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground",
+);
+
+oAuth2Client.setCredentials({
+  refresh_token: process.env.REFRESH_TOKEN,
 });
-const sendMail = async (email_receive, subject, html) => {
-  const mailOptions = {
-    from: `"Hộp Thư Thời Gian" <${process.env.EMAIL_USER}>`,
-    to: email_receive,
-    subject: subject,
-    html: html,
-  };
-  return await transporter.sendMail(mailOptions);
+
+const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
+
+// Hàm mã hóa email theo chuẩn RFC 2822 / MIME sang base64url cho Gmail API
+const makeBody = (to, from, subject, message) => {
+  const str = [
+    `To: ${to}`,
+    `From: ${from}`,
+    `Subject: =?utf-8?B?${Buffer.from(subject).toString("base64")}?=`,
+    "MIME-Version: 1.0",
+    "Content-Type: text/html; charset=UTF-8",
+    "Content-Transfer-Encoding: 7bit",
+    "",
+    message,
+  ].join("\n");
+
+  return Buffer.from(str)
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
 };
+
+const sendMail = async (to, subject, content) => {
+  try {
+    const raw = makeBody(
+      to,
+      `"Future Letter" <${process.env.EMAIL_USER}>`,
+      subject,
+      `<div style="font-family: Arial, sans-serif; line-height: 1.6;">${content}</div>`,
+    );
+
+    const res = await gmail.users.messages.send({
+      userId: "me",
+      requestBody: { raw },
+    });
+
+    console.log("✅ Gửi mail thành công qua Gmail REST API! ID:", res.data.id);
+    return res.data;
+  } catch (error) {
+    console.error("❌ Lỗi gửi mail qua Gmail REST API:", error);
+    throw error;
+  }
+};
+
 module.exports = { sendMail };
