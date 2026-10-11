@@ -50,27 +50,86 @@ const createLetterPost = async (req, res) => {
     const values = [];
     values.push([access_token, email, content, send_at, is_public]);
     await createLetter(values);
-    const appUrl =
-      process.env.APP_URL || "https://project-nodejs-app-mailing.onrender.com";
-
-    const htmlContent = `
-  <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
-    <h2 style="color: #2b6cb0;">Xác nhận lưu thư thành công</h2>
-    <p>Xin chào,</p>
-    <p>Hệ thống <strong>Future Letter</strong> đã ghi nhận bức thư gửi đến tương lai của bạn.</p>
-    <p>Bạn có thể theo dõi tiến trình và trạng thái gửi của bức thư bằng cách nhấn vào liên kết bên dưới:</p>
-    <div style="margin: 24px 0;">
-      <a href="${appUrl}/${access_token}" style="background-color: #3182ce; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
-        Xem chi tiết bức thư
-      </a>
+    const templateContent = (accessToken) => {
+      return `<div
+  style="
+    background-color: #f4efe6;
+    padding: 40px 15px;
+    font-family: &quot;Georgia&quot;, serif;
+  "
+>
+  <div
+    style="
+      max-width: 580px;
+      margin: 0 auto;
+      background-color: #fffdf9;
+      border: 1px solid #e2d9cc;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      padding: 35px 30px;
+      color: #333333;
+      line-height: 1.8;
+    "
+  >
+    <div
+      style="
+        border-bottom: 2px dashed #dcd3c4;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        text-align: center;
+      "
+    >
+      <h2
+        style="
+          margin: 0;
+          color: #5a4a42;
+          font-size: 22px;
+          font-weight: normal;
+          letter-spacing: 1px;
+          font-family: &quot;Times New Roman&quot;, Times, serif;
+        "
+      >
+      Bức thư gửi tương lai của bạn đã được ghi nhận
+      </h2>
     </div>
-    <p style="font-size: 13px; color: #718096;">Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.</p>
+    <div style="font-size: 15px; color: #2c2523; white-space: pre-line">
+      <h3 style="margin-top: 0; color: #3d322d">Gửi tôi của tương lai,</h3>
+      <p
+        style="
+          line-height: 40px;
+          font-family:
+            &quot;Comic Sans MS&quot;, &quot;Segoe Print&quot;,
+            &quot;Bradley Hand&quot;, &quot;Caveat&quot;, cursive;
+        "
+      >Chào bạn thân mến,
+      Cảm ơn bạn đã dành thời gian sử dụng dịch vụ Future Letter 💝,
+      Mong rằng những ngày tháng sắp tới của bạn sẽ thật tươi đẹp và trọn vẹn. Chúc bạn của hiện tại luôn an yên, và bạn của mai sau sẽ đạt được mọi điều mong ước nhé.
+      Bạn có thể xem tình trạng thư của mình <a href="https://project-nodejs-app-mailing.onrender.com/${accessToken}" target="_blank">tại đây</a>
+      </p>
+    </div>
   </div>
+  <div
+    style="
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #9c9289;
+    "
+  >
+    Bạn có thể liên hệ với tác giả
+    <a href="https://www.facebook.com/hung.ang.959587">tại đây</a>
+    <br />
+    Bức thư được gửi tự động bởi dịch vụ
+    <strong>Future Letter</strong>
+  </div>
+</div>
 `;
+    };
+    const formatContent = templateContent(access_token);
     await sendMail(
       email,
       "Xác nhận: Bức thư gửi tương lai của bạn đã được ghi nhận",
-      htmlContent,
+      formatContent,
     );
 
     res.redirect(`/${access_token}`);

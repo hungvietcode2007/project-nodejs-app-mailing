@@ -13,7 +13,6 @@ oAuth2Client.setCredentials({
 
 const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
 
-// Hàm mã hóa email theo chuẩn RFC 2822 / MIME sang base64url cho Gmail API
 const makeBody = (to, from, subject, message) => {
   const str = [
     `To: ${to}`,
@@ -39,7 +38,7 @@ const sendMail = async (to, subject, content) => {
       to,
       `"Future Letter" <${process.env.EMAIL_USER}>`,
       subject,
-      `<div style="font-family: Arial, sans-serif; line-height: 1.6;">${content}</div>`,
+      content,
     );
 
     const res = await gmail.users.messages.send({
