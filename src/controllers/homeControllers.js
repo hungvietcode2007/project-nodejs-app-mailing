@@ -93,7 +93,6 @@ const createLetterPost = async (req, res) => {
       </h2>
     </div>
     <div style="font-size: 15px; color: #2c2523; white-space: pre-line">
-      <h3 style="margin-top: 0; color: #3d322d">Gửi tôi của tương lai,</h3>
       <p
         style="
           line-height: 40px;
