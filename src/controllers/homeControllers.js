@@ -16,7 +16,8 @@ const calculateSendAt = (months) => {
 };
 const createLetterPost = async (req, res) => {
   try {
-    const { email, deliver_in, specific_date, public, content } = req.body;
+    const { email, deliver_in, specific_date, public, content, reason } =
+      req.body;
     if (!email || !email.trim()) {
       return res.status(400).render("writePage", {
         page: "write",
@@ -48,7 +49,14 @@ const createLetterPost = async (req, res) => {
       send_at = `${specific_date} 01:00:00`;
     }
     const values = [];
-    values.push([access_token, email, content, send_at, is_public]);
+    values.push([
+      access_token,
+      email,
+      content,
+      reason || null,
+      send_at,
+      is_public,
+    ]);
     await createLetter(values);
     const templateContent = (accessToken) => {
       return `<div

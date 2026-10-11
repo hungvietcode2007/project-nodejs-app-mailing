@@ -15,7 +15,7 @@
           Niêm phong tâm tư vào chiếc hộp thời gian. Một góc nhỏ bình yên gửi
           gắm đôi lời tới chính bạn của mai sau này.
         </p>
-        <div class="flex flex-col gap-2 mt-10">
+        <div class="flex flex-col gap-2 mt-5">
           <label
             for="email"
             class="flex items-center gap-2 text-md font-bold uppercase tracking-wider cursor-pointer text-[#4A3B32]"
@@ -42,7 +42,7 @@
             name="email"
             value="<%=(typeof error!=='undefined')?oldData.email:""%>"
             placeholder="you@example.com"
-            class="w-full bg-white text-gray-800 placeholder-gray-400 font-serif px-4 py-3 rounded-t-2xl border border-gray-200 border-b-2 border-b-gray-400 focus:outline-none focus:border-amber-500"
+            class="w-full bg-white text-gray-800 placeholder-gray-400 font-['Lora'] px-4 py-3 rounded-t-2xl border border-gray-200 border-b-2 border-b-gray-400 focus:outline-none focus:border-amber-500"
           />
         </div>
         <div class="flex flex-col gap-2 mt-8">
@@ -163,7 +163,19 @@
           </div>
         </label>
         <span class="text-stone-500">(Thư sẽ được gửi vào 8:00 sáng)</span>
-        <label class="cursor-pointer my-10">
+<div class="mt-5">
+  <label class="text-base font-bold text-[#8c6b58] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-orange-400 font-semibold"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12.4 3a5.34 5.34 0 0 1 4.906 3.239a5.333 5.333 0 0 1 -1.195 10.6a4.26 4.26 0 0 1 -5.28 1.863l-3.831 2.298v-3.134a2.668 2.668 0 0 1 -1.795 -3.773a4.8 4.8 0 0 1 2.908 -8.933a5.33 5.33 0 0 1 4.287 -2.16" /></svg>
+            <span class="font-['Lora']">Tâm trạng,lý do</span>
+  </label>
+  <input 
+    type="text" 
+    name="reason" 
+    placeholder="Hôm nay là một ngày ... (Tùy chọn)" 
+    class="w-full bg-white text-gray-800 placeholder-gray-400 font-['Lora'] px-4 py-3 rounded-t-2xl border border-gray-200 border-b-2 border-b-gray-400 focus:outline-none focus:border-amber-500"
+  />
+</div>
+        <label class="cursor-pointer my-7">
           <div class="flex items-center">
             <div class="relative mr-3">
               <input

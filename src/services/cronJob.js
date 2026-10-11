@@ -10,7 +10,7 @@ const formatToVNDate = (utcDateString) => {
     year: "numeric",
   }).format(date);
 };
-const templateMail = (createdAt, letterBody) => {
+const templateMail = (createdAt, letterBody, reason) => {
   return `<div
   style="
     background-color: #f4efe6;
@@ -60,6 +60,8 @@ const templateMail = (createdAt, letterBody) => {
         "
       >
         Được viết vào ngày: ${createdAt}
+        <br>
+        ${reason}
       </p>
     </div>
 
@@ -127,7 +129,7 @@ const startCronJob = () => {
     try {
       const [letters] = await connection.execute(`
         SELECT
-        id,recipient_email,content,created_at
+        id,recipient_email,content,created_at,reason
         FROM letters
         WHERE status="pending" AND send_at<=UTC_TIMESTAMP()
         `);
@@ -135,7 +137,15 @@ const startCronJob = () => {
       for (const letter of letters) {
         try {
           const createAt = formatToVNDate(letter.created_at);
-          const formatContent = templateMail(createAt, letter.content);
+          const reasonHtml =
+            letter.reason && letter.reason.trim() !== ""
+              ? `"${letter.reason}"`
+              : "";
+          const formatContent = templateMail(
+            createAt,
+            letter.content,
+            reasonHtml,
+          );
           await sendMail(
             letter.recipient_email,
             "Lời nhắn tới từ quá khứ",
